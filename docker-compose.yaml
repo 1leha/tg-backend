@@ -16,16 +16,16 @@ services:
 
   tg_postgres:
     container_name: tg_postgres
-    image: postgres:14
+    image: postgres:14.0-alpine
     environment:
-      POSTGRES_USER: tg
-      POSTGRES_PASSWORD: tg
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /data/postgres
       POSTGRES_DB: db
     volumes:
-      - postgres:/var/www/tg_postgres/docker-volumes/postgres
+      - ${DB_NAME}:/var/www/tg_postgres/docker-volumes/${DB_NAME}
     ports:
-      - 127.0.0.1:5432:5432
+      - ${DB_HOST}:${DB_PORT}:${DB_PORT}
     networks:
       - tg_postgres
     restart: unless-stopped
