@@ -1,0 +1,54 @@
+version: '3.5'
+
+services:
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: .
+  #   depends_on:
+  #     - tg_postgres
+  #   environment:
+  #     DATABASE_URL: postgres://tg:tg@postgres:5432/db
+  #     NODE_ENV: development
+  #     PORT: 3000
+  #   ports:
+  #     - '3001:3001'
+
+  tg_postgres:
+    container_name: tg_postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: tg
+      POSTGRES_PASSWORD: tg
+      PGDATA: /data/postgres
+      POSTGRES_DB: db
+    volumes:
+      - postgres:/var/www/tg_postgres/docker-volumes/postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - tg_postgres
+    restart: unless-stopped
+
+  tg_postgres_pgadmin:
+    container_name: tg_postgres_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tg@admin.com
+      PGADMIN_DEFAULT_PASSWORD: tg
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/www/tg_postgres/docker-volumes/pgadmin
+    ports:
+      - 127.0.0.1:5050:80
+    networks:
+      - tg_postgres
+    restart: unless-stopped
+
+networks:
+  tg_postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
