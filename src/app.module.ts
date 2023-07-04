@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './config';
+import { UserModule } from './entities/user/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import config from './config';
         logging: true,
       }),
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [],
