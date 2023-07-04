@@ -61,9 +61,9 @@ $ npm run test:cov
 ## Swagger
 
 ```bash
-# unit tests
+# Swagger endpoint
 /api
-
+```
 
 ## Support
 
@@ -78,4 +78,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+```
+
 ```
