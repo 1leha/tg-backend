@@ -1,10 +1,8 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../models/user.entity';
 import { Repository } from 'typeorm';
-// import { IUser } from '../models/user.interface';
 import * as bcrypt from 'bcrypt';
-import { appErrors } from 'src/common/appErrors';
 import { CreateUserInput } from '../inputs/createUser.input';
 import { UpdateUserInput } from '../inputs/updateUser.input';
 
@@ -24,14 +22,12 @@ export class UserService {
   }
 
   async createUser(user: CreateUserInput): Promise<UserEntity> {
-    console.log('createUser user:>> ', user);
     const hashedPassword = await this.hashPassword(user.password);
     user.password = hashedPassword;
 
-    const isExixstUser = await this.getUserByEmail(user.email);
-    if (isExixstUser) throw new BadRequestException(appErrors.USER_EXIST);
+    await this.userRepository.save(user);
 
-    return await this.userRepository.save(user);
+    return user as UserEntity;
   }
 
   async getAllUsers(): Promise<UserEntity[]> {
