@@ -8,13 +8,13 @@ import { UpdateUserInput } from '../inputs/updateUser.input';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Mutation(() => UserEntity)
-  async createUser(
-    @Args('createUser') user: CreateUserInput,
-  ): Promise<UserEntity> {
-    console.log('RESOLVER createUser');
-    return await this.userService.createUser(user);
-  }
+  // @Mutation(() => UserEntity)
+  // async createUser(
+  //   @Args('createUser') user: CreateUserInput,
+  // ): Promise<UserEntity> {
+  //   console.log('RESOLVER createUser');
+  //   return await this.userService.createUser(user);
+  // }
 
   @Mutation(() => UserEntity)
   async updateUser(

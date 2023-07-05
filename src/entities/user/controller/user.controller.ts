@@ -12,10 +12,10 @@ export class UserController {
   //   return this.userService.createUser(user);
   // }
 
-  @Post()
-  createUser(@Body() user: IUser): Promise<UserEntity> {
-    return this.userService.createUser(user);
-  }
+  // @Post()
+  // createUser(@Body() user: IUser): Promise<UserEntity> {
+  //   return this.userService.createUser(user);
+  // }
 
   @Get()
   getAllUsers(): Promise<UserEntity[]> {
