@@ -6,7 +6,7 @@ import { UserService } from 'src/entities/user/service/user.service';
 import { LoginUserInput } from './inputs/loginUser.input';
 import * as bcrypt from 'bcrypt';
 import { TokenService } from 'src/token/token.service';
-import { LoginUserResponse } from './Response/loginUser.response';
+import { AuthUserResponse } from './Response/authUser.response';
 
 @Injectable()
 export class AuthService {
@@ -15,15 +15,20 @@ export class AuthService {
     private readonly tokenService: TokenService,
   ) {}
 
-  async registerUser(user: CreateUserInput): Promise<UserEntity> {
+  async registerUser(user: CreateUserInput): Promise<AuthUserResponse> {
     const existUser = await this.userService.getUserByEmail(user.email);
     if (existUser) throw new BadRequestException(appErrors.USER_EXIST);
     const token = await this.tokenService.generateJwtToken(user.email);
 
-    return await this.userService.createUser({ ...user, token });
+    await this.userService.createUser({ ...user, token });
+
+    const publicUser = await this.userService.getUsersPublicFieldsByEmail(
+      user.email,
+    );
+    return { ...publicUser, token };
   }
 
-  async loginUser(user: LoginUserInput): Promise<LoginUserResponse> {
+  async loginUser(user: LoginUserInput): Promise<AuthUserResponse> {
     const existUser = await this.userService.getUserByEmail(user.email);
     if (!existUser) throw new BadRequestException(appErrors.USER_NOT_EXIST);
 
@@ -34,7 +39,11 @@ export class AuthService {
 
     if (!validatePassword) throw new BadRequestException(appErrors.BAD_REQUEST);
 
+    const publicUser = await this.userService.getUsersPublicFieldsByEmail(
+      user.email,
+    );
+
     const token = await this.tokenService.generateJwtToken(user.email);
-    return { email: existUser.email, token };
+    return { ...publicUser, token };
   }
 }
