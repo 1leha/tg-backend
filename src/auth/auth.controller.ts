@@ -1,9 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserInput } from 'src/entities/user/inputs/createUser.input';
 import { LoginUserInput } from './inputs/loginUser.input';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginUserResponse } from './Response/loginUser.response';
+import { JwtAuthGuard } from 'src/guards/jwt-guard';
 
 @Controller('auth')
 export class AuthController {
@@ -24,4 +25,10 @@ export class AuthController {
   async loginUser(@Body() user: LoginUserInput): Promise<LoginUserResponse> {
     return this.authService.loginUser(user);
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Post('test')
+  // test() {
+  //   console.log('TEST');
+  // }
 }
