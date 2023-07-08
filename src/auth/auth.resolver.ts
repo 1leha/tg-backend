@@ -12,7 +12,7 @@ export class AuthResolver {
   @Mutation(() => UserEntity)
   async registerUser(
     @Args('registerUser') user: CreateUserInput,
-  ): Promise<UserEntity> {
+  ): Promise<LoginUserResponse> {
     return await this.authService.registerUser(user);
   }
 
