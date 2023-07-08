@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import { CreateUserInput } from 'src/entities/user/inputs/createUser.input';
 import { LoginUserInput } from './inputs/loginUser.input';
-import { LoginUserResponse } from './Response/loginUser.response';
+import { AuthUserResponse } from './Response/authUser.response';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -12,14 +12,14 @@ export class AuthResolver {
   @Mutation(() => UserEntity)
   async registerUser(
     @Args('registerUser') user: CreateUserInput,
-  ): Promise<LoginUserResponse> {
+  ): Promise<AuthUserResponse> {
     return await this.authService.registerUser(user);
   }
 
   @Mutation(() => UserEntity)
   async loginUser(
     @Args('loginUser') user: LoginUserInput,
-  ): Promise<LoginUserResponse> {
+  ): Promise<AuthUserResponse> {
     return await this.authService.loginUser(user);
   }
 }

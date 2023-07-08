@@ -6,11 +6,18 @@ input CreateUserInput {
   email: String!
   password: String!
   role: String!
+  token: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }
 
 type Mutation {
-  createUser(createUser: CreateUserInput!): UserEntity!
   deleteUserById(id: Float!): Float!
+  loginUser(loginUser: LoginUserInput!): UserEntity!
+  registerUser(registerUser: CreateUserInput!): UserEntity!
   updateUser(updateUser: UpdateUserInput!): UserEntity!
 }
 
@@ -31,4 +38,5 @@ type UserEntity {
   id: ID!
   password: String!
   role: String!
+  token: String
 }

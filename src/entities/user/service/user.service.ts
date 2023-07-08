@@ -47,4 +47,14 @@ export class UserService {
     await this.userRepository.update({ id: user.id }, { ...user });
     return await this.getUserById(user.id);
   }
+
+  async getUsersPublicFieldsByEmail(email: string): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      where: { email },
+      select: {
+        email: true,
+        token: true,
+      },
+    });
+  }
 }
