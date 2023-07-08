@@ -5,10 +5,15 @@ import { UserEntity } from 'src/entities/user/models/user.entity';
 import { UserService } from 'src/entities/user/service/user.service';
 import { LoginUserInput } from './inputs/loginUser.input';
 import * as bcrypt from 'bcrypt';
+import { TokenService } from 'src/token/token.service';
+import { LoginUserResponse } from './Response/loginUser.response';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+  ) {}
 
   async registerUser(user: CreateUserInput): Promise<UserEntity> {
     const existUser = await this.userService.getUserByEmail(user.email);
@@ -17,7 +22,7 @@ export class AuthService {
     return await this.userService.createUser(user);
   }
 
-  async loginUser(user: LoginUserInput): Promise<UserEntity> {
+  async loginUser(user: LoginUserInput): Promise<LoginUserResponse> {
     const existUser = await this.userService.getUserByEmail(user.email);
     if (!existUser) throw new BadRequestException(appErrors.USER_NOT_EXIST);
 
@@ -27,6 +32,8 @@ export class AuthService {
     );
 
     if (!validatePassword) throw new BadRequestException(appErrors.BAD_REQUEST);
-    return existUser;
+
+    const token = await this.tokenService.generateJwtToken(user.email);
+    return { email: existUser.email, token };
   }
 }
