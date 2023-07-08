@@ -19,4 +19,8 @@ export class UserEntity {
   @Field()
   @Column()
   role: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  token: string;
 }
