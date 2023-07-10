@@ -2,7 +2,6 @@ import {
   UseGuards,
   createParamDecorator,
   ExecutionContext,
-  Req,
 } from '@nestjs/common';
 
 import {
@@ -18,6 +17,8 @@ import { UpdateUserInput } from '../inputs/updateUser.input';
 
 import { JwtAuthGuard } from 'src/guards/jwt-guard';
 import { AuthUserResponse } from 'src/auth/Response/authUser.response';
+import { CurrentUserResponse } from '../Response/currentUser.response';
+import { CurrentUserInput } from '../inputs/currentUser.input';
 
 const Request = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) =>
@@ -33,7 +34,7 @@ export class UserResolver {
   async updateCurrentUser(
     @Args('updateCurrentUser') updateUserInput: UpdateUserInput,
     @Request() req: ExecutionContext,
-  ): Promise<UserEntity> {
+  ): Promise<CurrentUserResponse> {
     const currentUser = await this.userService.getCurrentUser(req);
 
     return await this.userService.updateCurrentUser(
@@ -58,7 +59,7 @@ export class UserResolver {
   @Query(() => UserEntity)
   async getCurrentUser(
     @Request() req: ExecutionContext,
-  ): Promise<AuthUserResponse> {
+  ): Promise<CurrentUserInput> {
     return await this.userService.getCurrentUser(req);
   }
 

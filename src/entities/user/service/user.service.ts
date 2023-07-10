@@ -8,6 +8,7 @@ import { UpdateUserInput } from '../inputs/updateUser.input';
 import { TokenService } from 'src/token/token.service';
 import { AuthUserResponse } from 'src/auth/Response/authUser.response';
 import { CurrentUserInput } from '../inputs/currentUser.input';
+import { CurrentUserResponse } from '../Response/currentUser.response';
 
 @Injectable()
 export class UserService {
@@ -42,10 +43,9 @@ export class UserService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  async getCurrentUser(req: any): Promise<AuthUserResponse> {
+  async getCurrentUser(req: any): Promise<CurrentUserInput> {
     const token = req.headers.authorization.split(' ')[1];
     const user: any = this.tokenService.decodeJwtToken(token);
-    console.log('getCurrentUser  user :>> ', user);
     return await this.getUsersPublicFieldsByEmail(user.data);
   }
 
@@ -57,12 +57,12 @@ export class UserService {
   async updateCurrentUser(
     currentUser: CurrentUserInput,
     updatedData: UpdateUserInput,
-  ): Promise<UserEntity> {
+  ): Promise<CurrentUserResponse> {
     await this.userRepository.update(
       { email: currentUser.email },
       { ...updatedData },
     );
-    return await this.getUserByEmail(currentUser.email);
+    return { ...currentUser, ...updatedData };
   }
 
   async getUsersPublicFieldsByEmail(email: string): Promise<UserEntity> {
