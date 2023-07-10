@@ -8,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo/dist/drivers';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
+import { CategoryModule } from './entities/category/category.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { TokenModule } from './token/token.module';
     UserModule,
     AuthModule,
     TokenModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
