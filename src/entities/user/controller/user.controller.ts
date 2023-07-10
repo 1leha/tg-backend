@@ -1,24 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { IUser } from '../models/user.interface';
+// import { IUser } from '../models/user.interface';
 import { UserEntity } from '../models/user.entity';
+import { UpdateUserInput } from '../inputs/updateUser.input';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  // @Post()
-  // createUser(@Body() user: IUser): Observable<IUser> {
-  //   return this.userService.createUser(user);
-  // }
-
-  // @Post()
-  // createUser(@Body() user: IUser): Promise<UserEntity> {
-  //   return this.userService.createUser(user);
-  // }
-
   @Get()
   getAllUsers(): Promise<UserEntity[]> {
     return this.userService.getAllUsers();
+  }
+
+  @Patch('update')
+  updateUser(@Body() user: UpdateUserInput) {
+    console.log(`User ${user.email} is updated`);
+    return true;
   }
 }

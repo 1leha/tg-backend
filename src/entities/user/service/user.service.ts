@@ -1,16 +1,20 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, ExecutionContext } from '@nestjs/common';
 import { UserEntity } from '../models/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from '../inputs/createUser.input';
 import { UpdateUserInput } from '../inputs/updateUser.input';
+import { TokenService } from 'src/token/token.service';
+import { JwtAuthGuard } from 'src/guards/jwt-guard';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private readonly tokenService: TokenService,
+    private readonly jwtAuthGuard: JwtAuthGuard,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -38,6 +42,13 @@ export class UserService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
+  // async getCurrentUser(): Promise<UserEntity> {
+  //   // const token = null;
+  //   // const user = await this.tokenService.decodeJwtToken(token);
+  //   console.log('user :>> ', this.jwtAuthGuard.logIn);
+  //   return await this.userRepository.findOne({ where: { id: 1 } });
+  // }
+
   async deleteUserById(id: number): Promise<number> {
     await this.userRepository.delete({ id });
     return id;
@@ -52,6 +63,7 @@ export class UserService {
     return this.userRepository.findOne({
       where: { email },
       select: {
+        id: true,
         email: true,
         token: true,
       },
