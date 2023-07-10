@@ -6,7 +6,6 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from '../inputs/createUser.input';
 import { UpdateUserInput } from '../inputs/updateUser.input';
 import { TokenService } from 'src/token/token.service';
-import { AuthUserResponse } from 'src/auth/Response/authUser.response';
 import { CurrentUserInput } from '../inputs/currentUser.input';
 import { CurrentUserResponse } from '../Response/currentUser.response';
 
