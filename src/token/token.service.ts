@@ -17,7 +17,7 @@ export class TokenService {
     });
   }
 
-  async decodeJwtToken(token: string) {
+  decodeJwtToken(token: string) {
     return this.jwtservice.decode(token);
   }
 }

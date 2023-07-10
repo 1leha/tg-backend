@@ -1,12 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable, ExecutionContext } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../models/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from '../inputs/createUser.input';
 import { UpdateUserInput } from '../inputs/updateUser.input';
 import { TokenService } from 'src/token/token.service';
-import { JwtAuthGuard } from 'src/guards/jwt-guard';
+import { AuthUserResponse } from 'src/auth/Response/authUser.response';
+import { CurrentUserInput } from '../inputs/currentUser.input';
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,6 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly tokenService: TokenService,
-    private readonly jwtAuthGuard: JwtAuthGuard,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -42,21 +42,27 @@ export class UserService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  // async getCurrentUser(): Promise<UserEntity> {
-  //   // const token = null;
-  //   // const user = await this.tokenService.decodeJwtToken(token);
-  //   console.log('user :>> ', this.jwtAuthGuard.logIn);
-  //   return await this.userRepository.findOne({ where: { id: 1 } });
-  // }
+  async getCurrentUser(req: any): Promise<AuthUserResponse> {
+    const token = req.headers.authorization.split(' ')[1];
+    const user: any = this.tokenService.decodeJwtToken(token);
+    console.log('getCurrentUser  user :>> ', user);
+    return await this.getUsersPublicFieldsByEmail(user.data);
+  }
 
   async deleteUserById(id: number): Promise<number> {
     await this.userRepository.delete({ id });
     return id;
   }
 
-  async updateUser(user: UpdateUserInput): Promise<UserEntity> {
-    await this.userRepository.update({ id: user.id }, { ...user });
-    return await this.getUserById(user.id);
+  async updateCurrentUser(
+    currentUser: CurrentUserInput,
+    updatedData: UpdateUserInput,
+  ): Promise<UserEntity> {
+    await this.userRepository.update(
+      { email: currentUser.email },
+      { ...updatedData },
+    );
+    return await this.getUserByEmail(currentUser.email);
   }
 
   async getUsersPublicFieldsByEmail(email: string): Promise<UserEntity> {
