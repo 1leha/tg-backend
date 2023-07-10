@@ -18,17 +18,17 @@ type Mutation {
   deleteUserById(id: Float!): Float!
   loginUser(loginUser: LoginUserInput!): UserEntity!
   registerUser(registerUser: CreateUserInput!): UserEntity!
-  updateUser(updateUser: UpdateUserInput!): UserEntity!
+  updateCurrentUser(updateCurrentUser: UpdateUserInput!): UserEntity!
 }
 
 type Query {
   getAllUsers: [UserEntity!]!
+  getCurrentUser: UserEntity!
   getUserById(id: Float!): UserEntity!
 }
 
 input UpdateUserInput {
   email: String
-  id: ID!
   password: String
   role: String
 }
