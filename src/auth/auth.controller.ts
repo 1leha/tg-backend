@@ -24,9 +24,9 @@ export class AuthController {
     return this.authService.loginUser(user);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post('test')
-  // test() {
-  //   console.log('TEST');
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Post('test')
+  test() {
+    console.log('TEST');
+  }
 }

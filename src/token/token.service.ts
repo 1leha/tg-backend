@@ -9,11 +9,15 @@ export class TokenService {
     private readonly configService: ConfigService,
   ) {}
 
-  async generateJwtToken(user) {
-    const payload = { user };
+  async generateJwtToken(data: string) {
+    const payload = { data };
     return this.jwtservice.sign(payload, {
       secret: this.configService.get('jwtSecret'),
       expiresIn: this.configService.get('jwtExpire'),
     });
+  }
+
+  async decodeJwtToken(token: string) {
+    return this.jwtservice.decode(token);
   }
 }
