@@ -10,26 +10,28 @@ import {
   Args,
   Query,
   GqlExecutionContext,
+  Parent,
+  ResolveField,
 } from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
 import { UserEntity } from '../models/user.entity';
 import { UpdateUserInput } from '../inputs/updateUser.input';
 
 import { JwtAuthGuard } from 'src/guards/jwt-guard';
-import { AuthUserResponse } from 'src/auth/Response/authUser.response';
 import { CurrentUserResponse } from '../Response/currentUser.response';
 import { CurrentUserInput } from '../inputs/currentUser.input';
+import { CategoryEntity } from 'src/entities/category/models/category.entity';
 
 const Request = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) =>
     GqlExecutionContext.create(ctx).getContext().req,
 );
 
-@Resolver('User')
+@Resolver(() => UserEntity)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => UserEntity)
   async updateCurrentUser(
     @Args('updateCurrentUser') updateUserInput: UpdateUserInput,
@@ -43,19 +45,19 @@ export class UserResolver {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Number)
   async deleteUserById(@Args('id') id: number): Promise<number> {
     return await this.userService.deleteUserById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)
   async getUserById(@Args('id') id: number): Promise<UserEntity> {
     return await this.userService.getUserById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)
   async getCurrentUser(
     @Request() req: ExecutionContext,
@@ -63,11 +65,18 @@ export class UserResolver {
     return await this.userService.getCurrentUser(req);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => [UserEntity])
   async getAllUsers(): Promise<UserEntity[]> {
     // console.log('RESOLVER getAllUsers');
 
     return await this.userService.getAllUsers();
+  }
+
+  @ResolveField(() => CategoryEntity)
+  category(@Parent() user: UserEntity): boolean {
+    console.log('user :>> ', user);
+
+    return true;
   }
 }

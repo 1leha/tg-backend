@@ -14,7 +14,7 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly tokenService: TokenService,
+    private readonly tokenService: TokenService, // private readonly categoryService: CategoryService,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -25,13 +25,13 @@ export class UserService {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  async createUser(user: CreateUserInput): Promise<UserEntity> {
+  async createUser(user: CreateUserInput) {
+    const newUser = this.userRepository.create(user);
     const hashedPassword = await this.hashPassword(user.password);
-    user.password = hashedPassword;
+    newUser.password = hashedPassword;
+    await this.userRepository.save(newUser);
 
-    await this.userRepository.save(user);
-
-    return user as UserEntity;
+    return newUser;
   }
 
   async getAllUsers(): Promise<UserEntity[]> {
@@ -65,7 +65,7 @@ export class UserService {
   }
 
   async getUsersPublicFieldsByEmail(email: string): Promise<UserEntity> {
-    return this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: { email },
       select: {
         id: true,
@@ -74,4 +74,8 @@ export class UserService {
       },
     });
   }
+
+  // async getUserCategory(id: number) {
+  //   return await this.categoryService.getUserCategories(id);
+  // }
 }
