@@ -36,4 +36,13 @@ export class CategoryService {
   async getUserCategories(id: number): Promise<CategoryEntity[]> {
     return await this.categoryRepository.find({ where: { userId: id } });
   }
+
+  //   async updateCategory(id: number): Promise<CategoryEntity> {
+  //     return;
+  //   }
+
+  async deleteCategory(id: number): Promise<number> {
+    await this.categoryRepository.delete(id);
+    return id;
+  }
 }
