@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateCategoryInput } from './dto/createCategory.input';
 import { UserService } from '../user/service/user.service';
 import { UserEntity } from '../user/models/user.entity';
+import { UpdateCategoryInput } from './dto/updateCategory.input';
 
 @Injectable()
 export class CategoryService {
@@ -37,9 +38,16 @@ export class CategoryService {
     return await this.categoryRepository.find({ where: { userId: id } });
   }
 
-  //   async updateCategory(id: number): Promise<CategoryEntity> {
-  //     return;
-  //   }
+  async getCategoryById(id: number): Promise<CategoryEntity> {
+    return await this.categoryRepository.findOne({ where: { id } });
+  }
+
+  async updateCategory(dto: UpdateCategoryInput): Promise<CategoryEntity> {
+    await this.categoryRepository.update({ id: dto.id }, { ...dto });
+
+    const updatedUCategory = await this.getCategoryById(dto.id);
+    return updatedUCategory;
+  }
 
   async deleteCategory(id: number): Promise<number> {
     await this.categoryRepository.delete(id);
