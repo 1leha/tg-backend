@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, Int } from '@nestjs/graphql';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import {
   Entity,
@@ -6,7 +6,6 @@ import {
   Column,
   CreateDateColumn,
   ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 
 @ObjectType()
@@ -24,8 +23,13 @@ export class CategoryEntity {
   @CreateDateColumn()
   dataCreated: Date;
 
-  @Field()
-  @ManyToOne(() => UserEntity, (user) => user.id)
-  @JoinColumn()
-  user: number;
+  @Field(() => Int)
+  @Column()
+  userId: number;
+
+  ///
+
+  @ManyToOne(() => UserEntity, (user) => user.category)
+  @Field(() => UserEntity)
+  user: UserEntity;
 }

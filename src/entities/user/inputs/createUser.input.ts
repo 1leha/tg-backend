@@ -11,9 +11,11 @@ export class CreateUserInput {
   @Field()
   password: string;
 
+  @ApiProperty()
   @Field()
   role: string;
 
+  @ApiProperty()
   @Field({ nullable: true })
   token: string;
 }
