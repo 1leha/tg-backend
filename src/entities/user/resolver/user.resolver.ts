@@ -68,15 +68,11 @@ export class UserResolver {
   // @UseGuards(JwtAuthGuard)
   @Query(() => [UserEntity])
   async getAllUsers(): Promise<UserEntity[]> {
-    // console.log('RESOLVER getAllUsers');
-
     return await this.userService.getAllUsers();
   }
 
   @ResolveField(() => CategoryEntity)
-  category(@Parent() user: UserEntity): boolean {
-    console.log('user :>> ', user);
-
-    return true;
+  category(@Parent() user: CurrentUserResponse): Promise<CategoryEntity[]> {
+    return this.userService.getUserCategory(user.id);
   }
 }

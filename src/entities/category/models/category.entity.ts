@@ -27,8 +27,6 @@ export class CategoryEntity {
   @Column()
   userId: number;
 
-  ///
-
   @ManyToOne(() => UserEntity, (user) => user.category)
   @Field(() => UserEntity)
   user: UserEntity;
