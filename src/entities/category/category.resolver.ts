@@ -10,6 +10,7 @@ import { CategoryService } from './category.service';
 import { CategoryEntity } from './models/category.entity';
 import { CreateCategoryInput } from './dto/createCategory.input';
 import { UserEntity } from '../user/models/user.entity';
+import { CurrentUserResponse } from '../user/Response/currentUser.response';
 
 @Resolver(() => CategoryEntity)
 export class CategoryResolver {
@@ -24,14 +25,11 @@ export class CategoryResolver {
 
   @Query(() => [CategoryEntity])
   async getAllCategories(): Promise<CategoryEntity[]> {
-    // console.log('RESOLVER getAllUsers');
-
     return await this.categoryService.getAllCategories();
   }
 
   @ResolveField(() => UserEntity)
   user(@Parent() category: CategoryEntity): Promise<UserEntity> {
-    console.log('category  :>> ', category);
     return this.categoryService.getUser(category.userId);
   }
 }

@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { UserEntity } from '../models/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -8,13 +8,16 @@ import { UpdateUserInput } from '../inputs/updateUser.input';
 import { TokenService } from 'src/token/token.service';
 import { CurrentUserInput } from '../inputs/currentUser.input';
 import { CurrentUserResponse } from '../Response/currentUser.response';
+import { CategoryService } from 'src/entities/category/category.service';
 
 @Injectable()
 export class UserService {
   constructor(
+    @Inject(forwardRef(() => CategoryService))
+    private readonly categoryService: CategoryService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly tokenService: TokenService, // private readonly categoryService: CategoryService,
+    private readonly tokenService: TokenService,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -75,7 +78,7 @@ export class UserService {
     });
   }
 
-  // async getUserCategory(id: number) {
-  //   return await this.categoryService.getUserCategories(id);
-  // }
+  async getUserCategory(id: number) {
+    return await this.categoryService.getUserCategories(id);
+  }
 }
