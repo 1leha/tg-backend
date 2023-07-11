@@ -10,7 +10,6 @@ import { CategoryService } from './category.service';
 import { CategoryEntity } from './models/category.entity';
 import { CreateCategoryInput } from './dto/createCategory.input';
 import { UserEntity } from '../user/models/user.entity';
-import { CurrentUserResponse } from '../user/Response/currentUser.response';
 
 @Resolver(() => CategoryEntity)
 export class CategoryResolver {
@@ -21,6 +20,12 @@ export class CategoryResolver {
     @Args('newCategory') newCategory: CreateCategoryInput,
   ): Promise<CategoryEntity> {
     return await this.categoryService.createCategory(newCategory);
+  }
+
+  @Mutation(() => Number)
+  async deleteCategory(@Args('id') id: number): Promise<number> {
+    console.log('id :>> ', id);
+    return await this.categoryService.deleteCategory(id);
   }
 
   @Query(() => [CategoryEntity])
