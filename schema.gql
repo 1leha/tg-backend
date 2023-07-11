@@ -33,11 +33,12 @@ input LoginUserInput {
 }
 
 type Mutation {
-  createCategory(newCategory: CreateCategoryInput!): CategoryEntity!
+  createCategory(createCategoryInput: CreateCategoryInput!): CategoryEntity!
   deleteCategory(id: Float!): Float!
   deleteUserById(id: Float!): Float!
   loginUser(loginUser: LoginUserInput!): UserEntity!
   registerUser(registerUser: CreateUserInput!): UserEntity!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryEntity!
   updateCurrentUser(updateCurrentUser: UpdateUserInput!): UserEntity!
 }
 
@@ -46,6 +47,11 @@ type Query {
   getAllUsers: [UserEntity!]!
   getCurrentUser: UserEntity!
   getUserById(id: Float!): UserEntity!
+}
+
+input UpdateCategoryInput {
+  id: Int!
+  name: String!
 }
 
 input UpdateUserInput {
