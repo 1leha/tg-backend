@@ -45,8 +45,8 @@ export class CategoryService {
   async updateCategory(dto: UpdateCategoryInput): Promise<CategoryEntity> {
     await this.categoryRepository.update({ id: dto.id }, { ...dto });
 
-    const updatedUCategory = await this.getCategoryById(dto.id);
-    return updatedUCategory;
+    const updatedCategory = await this.getCategoryById(dto.id);
+    return updatedCategory;
   }
 
   async deleteCategory(id: number): Promise<number> {
