@@ -1,4 +1,35 @@
-import { Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Resolver,
+  Query,
+  //   ResolveField,
+  //   Parent,
+} from '@nestjs/graphql';
+import { TaskEntity } from './models/task.entity';
+import { TaskService } from './task.service';
+import { CreateTaskInput } from './dto/createTask.input';
+// import { CategoryEntity } from '../category/models/category.entity';
 
-@Resolver()
-export class TaskResolver {}
+@Resolver(() => TaskEntity)
+export class TaskResolver {
+  constructor(private readonly taskService: TaskService) {}
+
+  @Mutation(() => TaskEntity)
+  async createTask(
+    @Args('createTaskInput') createTaskInput: CreateTaskInput,
+  ): Promise<TaskEntity> {
+    console.log('createTaskInput :>> ', createTaskInput);
+    return await this.taskService.createTask(createTaskInput);
+  }
+
+  @Query(() => [TaskEntity])
+  async getAllTasks(): Promise<TaskEntity[]> {
+    return await this.taskService.getAllTasks();
+  }
+
+  // @ResolveField(() => CategoryEntity)
+  // category(@Parent() category: CategoryEntity): Promise<CategoryEntity> {
+  //   return this.categoryService.getUser(category.userId);
+  // }
+}
