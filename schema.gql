@@ -6,6 +6,7 @@ type CategoryEntity {
   dataCreated: DateTime!
   id: ID!
   name: String!
+  task: [TaskEntity!]
   user: UserEntity!
   userId: Int!
 }
@@ -47,6 +48,15 @@ type Query {
   getAllUsers: [UserEntity!]!
   getCurrentUser: UserEntity!
   getUserById(id: Float!): UserEntity!
+}
+
+type TaskEntity {
+  category: CategoryEntity!
+  categoryId: Int!
+  dataEnd: DateTime!
+  dataStart: DateTime!
+  id: ID!
+  name: String!
 }
 
 input UpdateCategoryInput {
