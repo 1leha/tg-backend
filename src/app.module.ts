@@ -9,6 +9,7 @@ import { ApolloDriver } from '@nestjs/apollo/dist/drivers';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { CategoryModule } from './entities/category/category.module';
+import { TaskModule } from './entities/task/task.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CategoryModule } from './entities/category/category.module';
     AuthModule,
     TokenModule,
     CategoryModule,
+    TaskModule,
   ],
   controllers: [],
   providers: [],
