@@ -1,13 +1,6 @@
 import { Field, ID, ObjectType, Int } from '@nestjs/graphql';
 import { CategoryEntity } from 'src/entities/category/models/category.entity';
-import { UserEntity } from 'src/entities/user/models/user.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @ObjectType()
 @Entity('tasks')
@@ -20,12 +13,12 @@ export class TaskEntity {
   @Column()
   name: string;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   dataStart: Date;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   dataEnd: Date;
 
   @Field(() => Int)
