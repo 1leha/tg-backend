@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType, Int } from '@nestjs/graphql';
+import { TaskEntity } from 'src/entities/task/models/task.entity';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import {
   Entity,
@@ -6,6 +7,7 @@ import {
   Column,
   CreateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @ObjectType()
@@ -30,4 +32,11 @@ export class CategoryEntity {
   @ManyToOne(() => UserEntity, (user) => user.category)
   @Field(() => UserEntity)
   user: UserEntity;
+
+  @OneToMany(() => TaskEntity, (task) => task.category, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @Field(() => [TaskEntity], { nullable: true })
+  task: TaskEntity[];
 }
