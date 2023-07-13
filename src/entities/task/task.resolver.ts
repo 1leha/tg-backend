@@ -34,13 +34,18 @@ export class TaskResolver {
     return await this.taskService.updateTask(updateTaskInput);
   }
 
+  @Mutation(() => Number)
+  async deleteTask(@Args('id') id: number): Promise<number> {
+    return await this.taskService.deleteTask(id);
+  }
+
   @Query(() => [TaskEntity])
   async getAllTasks(): Promise<TaskEntity[]> {
     return await this.taskService.getAllTasks();
   }
 
   @ResolveField(() => CategoryEntity)
-  category(@Parent() category: CategoryEntity): Promise<CategoryEntity> {
-    return this.categoryService.getCategoryById(category.id);
+  category(@Parent() task: TaskEntity): Promise<CategoryEntity> {
+    return this.categoryService.getCategoryById(task.categoryId);
   }
 }

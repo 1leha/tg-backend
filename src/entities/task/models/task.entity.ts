@@ -22,7 +22,7 @@ export class TaskEntity {
   dataEnd: Date;
 
   @Field(() => Int)
-  @Column()
+  @Column({ nullable: true })
   categoryId: number;
 
   @ManyToOne(() => CategoryEntity, (category) => category.task)
