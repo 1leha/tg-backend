@@ -11,6 +11,7 @@ import { TaskService } from './task.service';
 import { CreateTaskInput } from './dto/createTask.input';
 import { CategoryService } from '../category/category.service';
 import { CategoryEntity } from '../category/models/category.entity';
+import { UpdateTaskInput } from './dto/updateTask.input';
 
 @Resolver(() => TaskEntity)
 export class TaskResolver {
@@ -25,6 +26,14 @@ export class TaskResolver {
   ): Promise<TaskEntity> {
     console.log('createTaskInput :>> ', createTaskInput);
     return await this.taskService.createTask(createTaskInput);
+  }
+
+  @Mutation(() => TaskEntity)
+  async updateTask(
+    @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
+  ): Promise<TaskEntity> {
+    console.log('createTaskInput :>> ', updateTaskInput);
+    return;
   }
 
   @Query(() => [TaskEntity])
