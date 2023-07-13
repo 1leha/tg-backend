@@ -31,7 +31,6 @@ export class TaskResolver {
   async updateTask(
     @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
   ): Promise<TaskEntity> {
-    console.log('createTaskInput :>> ', updateTaskInput);
     return await this.taskService.updateTask(updateTaskInput);
   }
 
