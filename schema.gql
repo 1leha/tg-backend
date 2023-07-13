@@ -49,6 +49,7 @@ type Mutation {
   registerUser(registerUser: CreateUserInput!): UserEntity!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryEntity!
   updateCurrentUser(updateCurrentUser: UpdateUserInput!): UserEntity!
+  updateTask(updateTaskInput: UpdateTaskInput!): TaskEntity!
 }
 
 type Query {
@@ -69,6 +70,13 @@ type TaskEntity {
 }
 
 input UpdateCategoryInput {
+  id: Int!
+  name: String!
+}
+
+input UpdateTaskInput {
+  dataEnd: DateTime
+  dataStart: DateTime
   id: Int!
   name: String!
 }

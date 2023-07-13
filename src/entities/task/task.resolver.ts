@@ -24,7 +24,6 @@ export class TaskResolver {
   async createTask(
     @Args('createTaskInput') createTaskInput: CreateTaskInput,
   ): Promise<TaskEntity> {
-    console.log('createTaskInput :>> ', createTaskInput);
     return await this.taskService.createTask(createTaskInput);
   }
 
@@ -33,7 +32,7 @@ export class TaskResolver {
     @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
   ): Promise<TaskEntity> {
     console.log('createTaskInput :>> ', updateTaskInput);
-    return;
+    return await this.taskService.updateTask(updateTaskInput);
   }
 
   @Query(() => [TaskEntity])
