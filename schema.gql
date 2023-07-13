@@ -44,6 +44,7 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): CategoryEntity!
   createTask(createTaskInput: CreateTaskInput!): TaskEntity!
   deleteCategory(id: Float!): Float!
+  deleteTask(id: Float!): Float!
   deleteUserById(id: Float!): Float!
   loginUser(loginUser: LoginUserInput!): UserEntity!
   registerUser(registerUser: CreateUserInput!): UserEntity!
