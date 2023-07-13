@@ -11,10 +11,15 @@ import { CategoryEntity } from './models/category.entity';
 import { CreateCategoryInput } from './dto/createCategory.input';
 import { UserEntity } from '../user/models/user.entity';
 import { UpdateCategoryInput } from './dto/updateCategory.input';
+import { TaskEntity } from '../task/models/task.entity';
+import { TaskService } from '../task/task.service';
 
 @Resolver(() => CategoryEntity)
 export class CategoryResolver {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly taskService: TaskService,
+  ) {}
 
   @Mutation(() => CategoryEntity)
   async createCategory(
@@ -43,5 +48,10 @@ export class CategoryResolver {
   @ResolveField(() => UserEntity)
   user(@Parent() category: CategoryEntity): Promise<UserEntity> {
     return this.categoryService.getUser(category.userId);
+  }
+
+  @ResolveField(() => TaskEntity)
+  task(@Parent() category: CategoryEntity): Promise<TaskEntity[]> {
+    return this.taskService.getTasksByCategory(category.id);
   }
 }
