@@ -34,6 +34,6 @@ export class TaskResolver {
 
   @ResolveField(() => CategoryEntity)
   category(@Parent() category: CategoryEntity): Promise<CategoryEntity> {
-    return this.categoryService.getCategoryById(category.userId);
+    return this.categoryService.getCategoryById(category.id);
   }
 }

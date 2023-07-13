@@ -38,4 +38,8 @@ export class TaskService {
     await this.taskRepository.delete(id);
     return id;
   }
+
+  async getTasksByCategory(id: number): Promise<TaskEntity[]> {
+    return await this.taskRepository.find({ where: { categoryId: id } });
+  }
 }
