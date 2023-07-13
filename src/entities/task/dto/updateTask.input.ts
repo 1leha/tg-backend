@@ -11,10 +11,10 @@ export class UpdateTaskInput {
   name: string;
 
   @ApiProperty()
-  @Field()
+  @Field({ nullable: true })
   dataStart: Date;
 
   @ApiProperty()
-  @Field()
+  @Field({ nullable: true })
   dataEnd: Date;
 }
