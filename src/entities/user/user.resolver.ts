@@ -1,5 +1,5 @@
 import {
-  UseGuards,
+  // UseGuards,
   createParamDecorator,
   ExecutionContext,
 } from '@nestjs/common';
@@ -16,7 +16,7 @@ import {
 import { UserService } from './user.service';
 import { UserEntity } from './models/user.entity';
 
-import { JwtAuthGuard } from 'src/guards/jwt-guard';
+// import { JwtAuthGuard } from 'src/guards/jwt-guard';
 import { CurrentUserResponse } from './dto/currentUser.response';
 import { CategoryEntity } from 'src/entities/category/models/category.entity';
 import { UpdateUserInput } from './dto/updateUser.input';
