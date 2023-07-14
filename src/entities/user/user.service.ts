@@ -1,14 +1,14 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
-import { UserEntity } from '../models/user.entity';
+import { UserEntity } from './models/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CreateUserInput } from '../inputs/createUser.input';
-import { UpdateUserInput } from '../inputs/updateUser.input';
+import { CreateUserInput } from './dto/createUser.input';
 import { TokenService } from 'src/token/token.service';
-import { CurrentUserInput } from '../inputs/currentUser.input';
-import { CurrentUserResponse } from '../Response/currentUser.response';
+import { CurrentUserResponse } from './dto/currentUser.response';
 import { CategoryService } from 'src/entities/category/category.service';
+import { CurrentUserInput } from './dto/currentUser.input';
+import { UpdateUserInput } from './dto/updateUser.input';
 
 @Injectable()
 export class UserService {

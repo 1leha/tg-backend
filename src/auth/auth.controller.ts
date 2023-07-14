@@ -1,6 +1,6 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserInput } from 'src/entities/user/inputs/createUser.input';
+import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
 import { LoginUserInput } from './inputs/loginUser.input';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthUserResponse } from './Response/authUser.response';

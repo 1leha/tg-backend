@@ -29,7 +29,10 @@ export class CategoryEntity {
   @Column()
   userId: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.category)
+  @ManyToOne(() => UserEntity, (user) => user.category, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @Field(() => UserEntity)
   user: UserEntity;
 

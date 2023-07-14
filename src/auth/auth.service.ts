@@ -1,8 +1,8 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { appErrors } from 'src/common/constants/appErrors';
-import { CreateUserInput } from 'src/entities/user/inputs/createUser.input';
+import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
 import { UserEntity } from 'src/entities/user/models/user.entity';
-import { UserService } from 'src/entities/user/service/user.service';
+import { UserService } from 'src/entities/user/user.service';
 import { LoginUserInput } from './inputs/loginUser.input';
 import * as bcrypt from 'bcrypt';
 import { TokenService } from 'src/token/token.service';
