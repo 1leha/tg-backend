@@ -9,22 +9,27 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { IsString, IsInt, IsDate, IsArray } from 'class-validator';
 
 @ObjectType()
 @Entity('categories')
 export class CategoryEntity {
+  @IsInt()
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsString()
   @Field()
   @Column()
   name: string;
 
+  @IsDate()
   @Field()
   @CreateDateColumn()
   dataCreated: Date;
 
+  @IsInt()
   @Field(() => Int)
   @Column()
   userId: number;
@@ -36,6 +41,7 @@ export class CategoryEntity {
   @Field(() => UserEntity)
   user: UserEntity;
 
+  @IsArray()
   @OneToMany(() => TaskEntity, (task) => task.category, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

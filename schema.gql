@@ -26,7 +26,7 @@ input CreateTaskInput {
 input CreateUserInput {
   email: String!
   password: String!
-  role: String!
+  role: String
   token: String
 }
 
@@ -79,7 +79,7 @@ input UpdateTaskInput {
   dataEnd: DateTime
   dataStart: DateTime
   id: Int!
-  name: String!
+  name: String
 }
 
 input UpdateUserInput {

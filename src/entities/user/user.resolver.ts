@@ -38,7 +38,7 @@ export class UserResolver {
     @Request() req: ExecutionContext,
   ): Promise<CurrentUserResponse> {
     const currentUser = await this.userService.getCurrentUser(req);
-
+    console.log('currentUser :>> ', currentUser);
     return await this.userService.updateCurrentUser(
       currentUser,
       updateUserInput,
