@@ -30,6 +30,8 @@ export class UserService {
 
   async createUser(user: CreateUserInput) {
     const newUser = this.userRepository.create(user);
+
+    console.log('newUser :>> ', newUser);
     const hashedPassword = await this.hashPassword(user.password);
     newUser.password = hashedPassword;
     await this.userRepository.save(newUser);
