@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from './models/category.entity';
 import { Repository } from 'typeorm';
 import { CreateCategoryInput } from './dto/createCategory.input';
-import { UserService } from '../user/service/user.service';
+import { UserService } from '../user/user.service';
 import { UserEntity } from '../user/models/user.entity';
 import { UpdateCategoryInput } from './dto/updateCategory.input';
 

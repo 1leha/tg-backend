@@ -13,14 +13,14 @@ import {
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
-import { UserService } from '../service/user.service';
-import { UserEntity } from '../models/user.entity';
-import { UpdateUserInput } from '../inputs/updateUser.input';
+import { UserService } from './user.service';
+import { UserEntity } from './models/user.entity';
 
 import { JwtAuthGuard } from 'src/guards/jwt-guard';
-import { CurrentUserResponse } from '../Response/currentUser.response';
-import { CurrentUserInput } from '../inputs/currentUser.input';
+import { CurrentUserResponse } from './dto/currentUser.response';
 import { CategoryEntity } from 'src/entities/category/models/category.entity';
+import { UpdateUserInput } from './dto/updateUser.input';
+import { CurrentUserInput } from './dto/currentUser.input';
 
 const Request = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) =>

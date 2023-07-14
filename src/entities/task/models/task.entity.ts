@@ -25,7 +25,10 @@ export class TaskEntity {
   @Column({ nullable: true })
   categoryId: number;
 
-  @ManyToOne(() => CategoryEntity, (category) => category.task)
+  @ManyToOne(() => CategoryEntity, (category) => category.task, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @Field(() => CategoryEntity)
   category: CategoryEntity;
 }
