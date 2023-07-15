@@ -46,12 +46,10 @@ export class UserService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  async getCurrentUser(req: any): Promise<any> {
+  async getCurrentUser(req: any): Promise<UserEntity> {
     const token = req.headers.authorization.split(' ')[1];
-    console.log('token :>> ', token);
-    // const user = this.tokenService.decodeJwtToken(token);
 
-    const user = await this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: { token },
       select: {
         id: true,
@@ -59,18 +57,6 @@ export class UserService {
         token: true,
       },
     });
-
-    console.log('user :>> ', user);
-    return this.userRepository.findOne({
-      where: { token },
-      select: {
-        id: true,
-        email: true,
-        token: true,
-      },
-    });
-
-    // return await this.getUsersPublicFieldsByEmail(user.data);
   }
 
   async deleteUserById(id: number): Promise<number> {
