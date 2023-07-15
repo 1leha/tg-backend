@@ -47,6 +47,7 @@ type Mutation {
   deleteTask(id: Float!): Float!
   deleteUserById(id: Float!): Float!
   loginUser(loginUser: LoginUserInput!): UserEntity!
+  logoutUser: String!
   registerUser(registerUser: CreateUserInput!): UserEntity!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryEntity!
   updateCurrentUser(updateCurrentUser: UpdateUserInput!): UserEntity!
