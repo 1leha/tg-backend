@@ -46,4 +46,12 @@ export class AuthService {
     const token = await this.tokenService.generateJwtToken(user.email);
     return { ...publicUser, token };
   }
+
+  async logoutUser(req: any): Promise<any> {
+    const currentUser = await this.userService.getCurrentUser(req);
+    const response = await this.userService.resetTokenOfCurrentUser(
+      currentUser,
+    );
+    return `User ${response} is logout successfully...`;
+  }
 }

@@ -31,7 +31,6 @@ export class UserService {
   async createUser(user: CreateUserInput) {
     const newUser = this.userRepository.create(user);
 
-    console.log('newUser :>> ', newUser);
     const hashedPassword = await this.hashPassword(user.password);
     newUser.password = hashedPassword;
     await this.userRepository.save(newUser);
@@ -67,6 +66,16 @@ export class UserService {
       { ...updatedData },
     );
     return { ...currentUser, ...updatedData };
+  }
+
+  async resetTokenOfCurrentUser(
+    currentUser: CurrentUserInput,
+  ): Promise<string> {
+    await this.userRepository.update(
+      { email: currentUser.email },
+      { token: null },
+    );
+    return currentUser.email;
   }
 
   async getUsersPublicFieldsByEmail(email: string): Promise<UserEntity> {

@@ -1,6 +1,5 @@
 import {
   // UseGuards,
-  createParamDecorator,
   ExecutionContext,
 } from '@nestjs/common';
 
@@ -9,7 +8,6 @@ import {
   Mutation,
   Args,
   Query,
-  GqlExecutionContext,
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
@@ -21,11 +19,7 @@ import { CurrentUserResponse } from './dto/currentUser.response';
 import { CategoryEntity } from 'src/entities/category/models/category.entity';
 import { UpdateUserInput } from './dto/updateUser.input';
 import { CurrentUserInput } from './dto/currentUser.input';
-
-const Request = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) =>
-    GqlExecutionContext.create(ctx).getContext().req,
-);
+import { Request } from 'src/common/decorators/userContextFromRequest';
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -38,7 +32,6 @@ export class UserResolver {
     @Request() req: ExecutionContext,
   ): Promise<CurrentUserResponse> {
     const currentUser = await this.userService.getCurrentUser(req);
-    console.log('currentUser :>> ', currentUser);
     return await this.userService.updateCurrentUser(
       currentUser,
       updateUserInput,
