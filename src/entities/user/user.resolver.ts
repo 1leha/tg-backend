@@ -1,7 +1,4 @@
-import {
-  // UseGuards,
-  ExecutionContext,
-} from '@nestjs/common';
+import { UseGuards, ExecutionContext } from '@nestjs/common';
 
 import {
   Resolver,
@@ -14,7 +11,7 @@ import {
 import { UserService } from './user.service';
 import { UserEntity } from './models/user.entity';
 
-// import { JwtAuthGuard } from 'src/guards/jwt-guard';
+import { JwtAuthGuard } from 'src/guards/jwt-guard';
 import { CurrentUserResponse } from './dto/currentUser.response';
 import { CategoryEntity } from 'src/entities/category/models/category.entity';
 import { UpdateUserInput } from './dto/updateUser.input';
@@ -25,7 +22,7 @@ import { Request } from 'src/common/decorators/userContextFromRequest';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => UserEntity)
   async updateCurrentUser(
     @Args('updateCurrentUser') updateUserInput: UpdateUserInput,
@@ -38,19 +35,19 @@ export class UserResolver {
     );
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Number)
   async deleteUserById(@Args('id') id: number): Promise<number> {
     return await this.userService.deleteUserById(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)
   async getUserById(@Args('id') id: number): Promise<UserEntity> {
     return await this.userService.getUserById(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)
   async getCurrentUser(
     @Request() req: ExecutionContext,
@@ -58,7 +55,7 @@ export class UserResolver {
     return await this.userService.getCurrentUser(req);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Query(() => [UserEntity])
   async getAllUsers(): Promise<UserEntity[]> {
     return await this.userService.getAllUsers();

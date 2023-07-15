@@ -5,7 +5,8 @@ import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
 import { LoginUserInput } from './dto/loginUser.input';
 import { AuthUserResponse } from './dto/authUser.response';
 import { Request } from 'src/common/decorators/userContextFromRequest';
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/guards/jwt-guard';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -25,6 +26,7 @@ export class AuthResolver {
     return await this.authService.loginUser(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => String)
   async logoutUser(@Request() req: ExecutionContext): Promise<any> {
     return this.authService.logoutUser(req);
