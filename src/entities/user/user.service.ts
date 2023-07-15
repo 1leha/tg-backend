@@ -46,10 +46,31 @@ export class UserService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  async getCurrentUser(req: any): Promise<CurrentUserInput> {
+  async getCurrentUser(req: any): Promise<any> {
     const token = req.headers.authorization.split(' ')[1];
-    const user: any = this.tokenService.decodeJwtToken(token);
-    return await this.getUsersPublicFieldsByEmail(user.data);
+    console.log('token :>> ', token);
+    // const user = this.tokenService.decodeJwtToken(token);
+
+    const user = await this.userRepository.findOne({
+      where: { token },
+      select: {
+        id: true,
+        email: true,
+        token: true,
+      },
+    });
+
+    console.log('user :>> ', user);
+    return this.userRepository.findOne({
+      where: { token },
+      select: {
+        id: true,
+        email: true,
+        token: true,
+      },
+    });
+
+    // return await this.getUsersPublicFieldsByEmail(user.data);
   }
 
   async deleteUserById(id: number): Promise<number> {
@@ -66,6 +87,11 @@ export class UserService {
       { ...updatedData },
     );
     return { ...currentUser, ...updatedData };
+  }
+
+  async updateToken(email: string, token: string): Promise<any> {
+    await this.userRepository.update({ email }, { token });
+    return;
   }
 
   async resetTokenOfCurrentUser(
