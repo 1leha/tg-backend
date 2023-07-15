@@ -3,10 +3,10 @@ import { appErrors } from 'src/common/constants/appErrors';
 import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import { UserService } from 'src/entities/user/user.service';
-import { LoginUserInput } from './inputs/loginUser.input';
+import { LoginUserInput } from './dto/loginUser.input';
 import * as bcrypt from 'bcrypt';
 import { TokenService } from 'src/token/token.service';
-import { AuthUserResponse } from './Response/authUser.response';
+import { AuthUserResponse } from './dto/authUser.response';
 
 @Injectable()
 export class AuthService {
