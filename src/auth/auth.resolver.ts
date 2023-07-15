@@ -2,8 +2,8 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
-import { LoginUserInput } from './inputs/loginUser.input';
-import { AuthUserResponse } from './Response/authUser.response';
+import { LoginUserInput } from './dto/loginUser.input';
+import { AuthUserResponse } from './dto/authUser.response';
 
 @Resolver('Auth')
 export class AuthResolver {
