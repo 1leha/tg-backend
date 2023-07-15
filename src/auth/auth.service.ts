@@ -28,8 +28,9 @@ export class AuthService {
     return { ...publicUser, token };
   }
 
-  async loginUser(user: LoginUserInput): Promise<AuthUserResponse> {
+  async loginUser(user: LoginUserInput): Promise<UserEntity> {
     const existUser = await this.userService.getUserByEmail(user.email);
+
     if (!existUser) throw new BadRequestException(appErrors.USER_NOT_EXIST);
 
     const validatePassword = await bcrypt.compare(
@@ -39,19 +40,21 @@ export class AuthService {
 
     if (!validatePassword) throw new BadRequestException(appErrors.BAD_REQUEST);
 
-    const publicUser = await this.userService.getUsersPublicFieldsByEmail(
+    const token = await this.tokenService.generateJwtToken(user.email);
+    await this.userService.updateToken(user.email, token);
+
+    const loginedUser = await this.userService.getUsersPublicFieldsByEmail(
       user.email,
     );
 
-    const token = await this.tokenService.generateJwtToken(user.email);
-    return { ...publicUser, token };
+    return loginedUser;
   }
 
   async logoutUser(req: any): Promise<any> {
     const currentUser = await this.userService.getCurrentUser(req);
-    const response = await this.userService.resetTokenOfCurrentUser(
+    const logoutedUser = await this.userService.resetTokenOfCurrentUser(
       currentUser,
     );
-    return `User ${response} is logout successfully...`;
+    return `User ${logoutedUser} is logout successfully...`;
   }
 }
