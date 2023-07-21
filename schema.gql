@@ -55,6 +55,7 @@ type Mutation {
 }
 
 type Query {
+  categories(id: Float!): [CategoryEntity!]!
   getAllCategories: [CategoryEntity!]!
   getAllTasks: [TaskEntity!]!
   getAllUsers: [UserEntity!]!
