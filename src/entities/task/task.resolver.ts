@@ -51,6 +51,12 @@ export class TaskResolver {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Query(() => [TaskEntity])
+  async tasks(@Args('categoryId') categoryId: number): Promise<TaskEntity[]> {
+    return await this.taskService.getTasksByCategory(categoryId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @ResolveField(() => CategoryEntity)
   category(@Parent() task: TaskEntity): Promise<CategoryEntity> {
     return this.categoryService.getCategoryById(task.categoryId);

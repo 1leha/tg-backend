@@ -61,6 +61,7 @@ type Query {
   getAllUsers: [UserEntity!]!
   getCurrentUser: UserEntity!
   getUserById(id: Float!): UserEntity!
+  tasks(categoryId: Float!): [TaskEntity!]!
 }
 
 type TaskEntity {
