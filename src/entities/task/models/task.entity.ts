@@ -16,6 +16,11 @@ export class TaskEntity {
   @Column()
   name: string;
 
+  @IsString()
+  @Field()
+  @Column()
+  description: string;
+
   @IsDate()
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -30,6 +35,11 @@ export class TaskEntity {
   @Field(() => Int)
   @Column({ nullable: true })
   categoryId: number;
+
+  @IsInt()
+  @Field(() => Int)
+  @Column({ nullable: true })
+  length: number;
 
   @ManyToOne(() => CategoryEntity, (category) => category.task, {
     onDelete: 'CASCADE',

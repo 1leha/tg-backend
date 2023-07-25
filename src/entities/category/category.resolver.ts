@@ -71,4 +71,10 @@ export class CategoryResolver {
   task(@Parent() category: CategoryEntity): Promise<TaskEntity[]> {
     return this.taskService.getTasksByCategory(category.id);
   }
+  @UseGuards(JwtAuthGuard)
+  @ResolveField(() => TaskEntity)
+  async tasks(@Parent() category: CategoryEntity): Promise<{ length: number }> {
+    const tasks = await this.taskService.getTasksByCategory(category.id);
+    return { length: tasks.length };
+  }
 }

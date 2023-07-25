@@ -12,4 +12,9 @@ export class UpdateCategoryResponse {
   @IsString()
   @Field()
   name: string;
+
+  @ApiProperty()
+  @IsString()
+  @Field()
+  description: string;
 }

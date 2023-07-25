@@ -16,6 +16,12 @@ export class UpdateTaskInput {
 
   @IsOptional()
   @ApiProperty()
+  @IsString()
+  @Field({ nullable: true })
+  description: string;
+
+  @IsOptional()
+  @ApiProperty()
   @IsDate()
   @Field({ nullable: true })
   dataStart: Date;

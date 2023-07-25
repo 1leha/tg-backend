@@ -7,6 +7,7 @@ type CategoryEntity {
   id: ID!
   name: String!
   task: [TaskEntity!]
+  tasks: TaskEntity!
   user: UserEntity!
   userId: Int!
 }
@@ -20,6 +21,7 @@ input CreateTaskInput {
   categoryId: Int!
   dataEnd: DateTime!
   dataStart: DateTime!
+  description: String!
   name: String!
 }
 
@@ -69,7 +71,9 @@ type TaskEntity {
   categoryId: Int!
   dataEnd: DateTime
   dataStart: DateTime
+  description: String!
   id: ID!
+  length: Int!
   name: String!
 }
 
@@ -81,6 +85,7 @@ input UpdateCategoryInput {
 input UpdateTaskInput {
   dataEnd: DateTime
   dataStart: DateTime
+  description: String
   id: Int!
   name: String
 }
