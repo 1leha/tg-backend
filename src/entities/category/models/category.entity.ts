@@ -10,6 +10,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { IsString, IsInt, IsDate, IsArray } from 'class-validator';
+import { TaskLengthResponse } from 'src/entities/task/dto/taskLength.response';
 
 @ObjectType()
 @Entity('categories')

@@ -9,6 +9,11 @@ export class CreateTaskInput {
   @Field()
   name: string;
 
+  @IsString()
+  @ApiProperty()
+  @Field()
+  description: string;
+
   @IsDate()
   @ApiProperty()
   @Field()
