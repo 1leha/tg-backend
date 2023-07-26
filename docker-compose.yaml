@@ -1,5 +1,6 @@
 version: '3.5'
 
+# backend
 services:
   # api:
   #   build:
@@ -14,6 +15,7 @@ services:
   #   ports:
   #     - '3001:3000'
 
+  # db
   tg_postgres:
     container_name: tg_postgres
     image: postgres:14.0-alpine
@@ -30,6 +32,7 @@ services:
       - tg_postgres
     restart: unless-stopped
 
+  # pg admin
   tg_postgres_pgadmin:
     container_name: tg_postgres_pgadmin
     image: dpage/pgadmin4
