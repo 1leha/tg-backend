@@ -13,17 +13,14 @@ import { UserEntity } from '../user/models/user.entity';
 import { UpdateCategoryInput } from './dto/updateCategory.input';
 import { TaskEntity } from '../task/models/task.entity';
 import { TaskService } from '../task/task.service';
-import { UseGuards, ExecutionContext } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-guard';
-import { Request } from 'src/common/decorators/userContextFromRequest';
-import { UserService } from '../user/user.service';
 
 @Resolver(() => CategoryEntity)
 export class CategoryResolver {
   constructor(
     private readonly categoryService: CategoryService,
     private readonly taskService: TaskService,
-    private readonly userService: UserService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
