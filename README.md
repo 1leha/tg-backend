@@ -25,6 +25,12 @@ Then:
 
 ### `docker-compose up -b`
 
+Builds and runs the app in the development mode inside docker container.
+
+### `docker-compose up`
+
+Runs the app in the development mode inside docker container. You have to build images at first!
+
 ### `npm run start:dev`
 
 Runs the app in the development mode.\
