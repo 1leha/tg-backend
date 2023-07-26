@@ -33,8 +33,8 @@ Runs the app in the development mode inside docker container. You have to build 
 
 ### `npm run start:dev`
 
-Runs the app in the development mode.\
-Server adress by default: [http://localhost:3001](http://localhost:3001).
+Runs the app in the development mode. You must to start your docker container with PostgreSQL.\
+Server adress by default: [http://localhost:3001](http://localhost:3001).\
 GraphQL server : [http://localhost:3001/graphql](http://localhost:3001/graphql).
 
 ## Technologies and libraries
