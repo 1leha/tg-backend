@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { UserEntity } from './models/user.entity';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { CreateUserInput } from './dto/createUser.input';
 import { TokenService } from 'src/token/token.service';
 import { CurrentUserResponse } from './dto/currentUser.response';
