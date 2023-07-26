@@ -20,15 +20,13 @@ export class UpdateTaskInput {
   @Field({ nullable: true })
   description: string;
 
-  @IsOptional()
   @ApiProperty()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   dataStart: Date;
 
-  @IsOptional()
   @ApiProperty()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   dataEnd: Date;
 }

@@ -17,7 +17,9 @@ export class AuthService {
 
   async registerUser(user: CreateUserInput): Promise<AuthUserResponse> {
     const existUser = await this.userService.getUserByEmail(user.email);
+
     if (existUser) throw new BadRequestException(appErrors.USER_EXIST);
+
     const token = await this.tokenService.generateJwtToken(user.email);
 
     await this.userService.createUser({ ...user, token });

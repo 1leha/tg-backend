@@ -69,9 +69,9 @@ type Query {
 type TaskEntity {
   category: CategoryEntity!
   categoryId: Int!
-  dataEnd: DateTime
-  dataStart: DateTime
-  description: String!
+  dataEnd: DateTime!
+  dataStart: DateTime!
+  description: String
   id: ID!
   length: Int!
   name: String!
@@ -83,8 +83,8 @@ input UpdateCategoryInput {
 }
 
 input UpdateTaskInput {
-  dataEnd: DateTime
-  dataStart: DateTime
+  dataEnd: DateTime!
+  dataStart: DateTime!
   description: String
   id: Int!
   name: String

@@ -17,18 +17,18 @@ export class TaskEntity {
   name: string;
 
   @IsString()
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   description: string;
 
   @IsDate()
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field()
+  @Column()
   dataStart: Date;
 
   @IsDate()
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field()
+  @Column()
   dataEnd: Date;
 
   @IsInt()
