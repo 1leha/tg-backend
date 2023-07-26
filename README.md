@@ -10,7 +10,7 @@ Backend (this page)\
 This is the backend of task manager was developed using the NestJS framework.
 
 I used PostgreSQL database as data storage.\
-The project is built into a docker container that contains 3 images: a `backend`, a `database` and `pgAdmin` for watchind of data in database.\
+The project is built into a docker container that contains 3 images: `backend`, `database` and `pgAdmin` for watchind of data in database.\
 The queries are implemented using graphQL. For data validation I was using the ValidationPipe.\
 All user passwords are hashed. User authorization occurs with JWT-token.\
 The settings are collected in .env.example.
@@ -19,16 +19,18 @@ The settings are collected in .env.example.
 
 Download this repo.
 
+Start and login to your Docker.
+
 Then:
 
-### `npm install`
+### `docker-compose up -b`
 
-### `npm start`
+### `npm run start:dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Server adress by default: [http://localhost:3001](http://localhost:3001).
+GraphQL server : [http://localhost:3001/graphql](http://localhost:3001/graphql).
 
 ## Technologies and libraries
 
-typescript, react, redux, redux-persist, mui, apollo, graphql, formic, yup,
-date-fns, toastify
+typescript, nestjs, pg, apollo, graphql, typeorm, passport, bcryptjs, class-transformer, class-validator
