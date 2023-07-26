@@ -4,7 +4,7 @@ import { CreateUserInput } from 'src/entities/user/dto/createUser.input';
 import { UserEntity } from 'src/entities/user/models/user.entity';
 import { UserService } from 'src/entities/user/user.service';
 import { LoginUserInput } from './dto/loginUser.input';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { TokenService } from 'src/token/token.service';
 import { AuthUserResponse } from './dto/authUser.response';
 

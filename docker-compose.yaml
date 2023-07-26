@@ -1,20 +1,6 @@
 version: '3.5'
 
-# backend
 services:
-  # api:
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: .
-  #   depends_on:
-  #     - tg_postgres
-  #   environment:
-  #     DATABASE_URL: postgres://tg:tg@postgres:5432/db
-  #     NODE_ENV: development
-  #     PORT: 3000
-  #   ports:
-  #     - '3001:3000'
-
   # db
   tg_postgres:
     container_name: tg_postgres
@@ -22,12 +8,13 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
     volumes:
-      - ${DB_NAME}:/var/www/tg_postgres/docker-volumes/${DB_NAME}
+      - pgdata:/var/www/tg_postgres/docker-volumes/data
     ports:
-      - ${DB_HOST}:${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:${DB_PORT}
+
     networks:
       - tg_postgres
     restart: unless-stopped
@@ -37,21 +24,49 @@ services:
     container_name: tg_postgres_pgadmin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: tg@admin.com
-      PGADMIN_DEFAULT_PASSWORD: tg
+      PGADMIN_DEFAULT_EMAIL: ${DB_USERNAME}@admin.com
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
       - pgadmin:/var/www/tg_postgres/docker-volumes/pgadmin
     ports:
-      - 127.0.0.1:5050:80
+      - '5050:80'
     networks:
       - tg_postgres
     restart: unless-stopped
 
+  # backend
+  backend:
+    container_name: tg-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - tg_postgres
+
+    environment:
+      NODE_ENV: development
+      API_HOST: ${API_HOST}
+      API_PORT: ${API_PORT}
+
+      DB_HOST: tg_postgres
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRE: ${JWT_EXPIRE}
+      SALT: ${SALT}
+
+    ports:
+      - ${API_PORT}:${API_PORT}
+    networks:
+      - tg_postgres
+
 networks:
   tg_postgres:
-    driver: bridge
 
 volumes:
-  postgres:
+  pgdata:
   pgadmin:

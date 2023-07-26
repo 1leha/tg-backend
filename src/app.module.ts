@@ -27,10 +27,11 @@ import { TaskModule } from './entities/task/task.module';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         type: 'postgres',
+        host: config.get<string>('dbHost'),
+        port: config.get<number>('dbPort'),
+        database: config.get<string>('dbName'),
         username: config.get<string>('dbUsername'),
         password: config.get<string>('dbPassword'),
-        database: 'postgres',
-        port: config.get<number>('dbPort'),
         entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
         synchronize: true,
         autoLoadEntities: true,
